@@ -1,0 +1,1829 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>DIGIHUSTLECO — Indonesian Digital Media &amp; AI Venture Hub (ESTD 2026)</title>
+  <meta name="description" content="Empowering Digital Entrepreneurs to Build Their Optimal Digital Brand. An Indonesian digital media and AI venture hub crafting free AI-powered tools and tailored digital solutions." />
+  <meta name="theme-color" content="#06080D" />
+
+  <!-- Open Graph Metadata for Social & Link Sharing -->
+  <meta property="og:title" content="DIGIHUSTLECO — Indonesian Digital Media & AI Venture Hub" />
+  <meta property="og:description" content="Free AI-powered creator tools (DealSendiri AI, KontrakAman AI, IdeLokal AI) and tailored digital solutions—built for the creator community, purely for the love of the game." />
+  <meta property="og:type" content="website" />
+
+  <!-- Google Fonts: Space Grotesk (Headings), Plus Jakarta Sans (Body), JetBrains Mono (Technical Labels) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Custom Palette & Typography Configuration -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            obsidian: '#06080D',
+            slatecard: '#0D111A',
+            gold: {
+              DEFAULT: '#D4AF37',
+              light: '#F3D97E',
+              deep: '#8F6D14'
+            },
+            cyanpulse: '#38BDF8',
+            ink: {
+              primary: '#F8FAFC',
+              muted: '#94A3B8'
+            }
+          },
+          fontFamily: {
+            display: ['"Space Grotesk"', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Strict 60fps GPU-Only CSS (transform & opacity only, zero heavy filters) -->
+  <style>
+    /* Static dark obsidian architectural backdrop with subtle gold illumination */
+    .bg-obsidian-studio {
+      background-color: #06080D;
+      background-image:
+        radial-gradient(ellipse 70% 42% at 58% 0%, rgba(212, 175, 55, 0.10) 0%, rgba(56, 189, 248, 0.025) 48%, transparent 76%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+      background-size: 100% 100%, 48px 48px, 48px 48px;
+      background-position: center top, center top, center top;
+    }
+
+    /* Subtle 1px slate card border per luxury design specification */
+    .card-surface {
+      background-color: #0D111A;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .card-surface-gold {
+      background-color: #0D111A;
+      border: 1px solid rgba(212, 175, 55, 0.28);
+    }
+
+    /* GPU-composited continuous ring rotation for preloader emblem */
+    @keyframes hudRingSpin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .animate-hud-spin {
+      animation: hudRingSpin 4.2s linear infinite;
+      will-change: transform;
+    }
+
+    /* GPU-composited status dot pulse */
+    @keyframes dotPulse {
+      0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.35;
+        transform: scale(0.78);
+      }
+    }
+
+    .animate-dot-pulse {
+      animation: dotPulse 2.4s ease-in-out infinite;
+      will-change: transform, opacity;
+    }
+
+    /* Preloader overlay GPU transitions */
+    #preloader {
+      transition: opacity 450ms cubic-bezier(0.22, 1, 0.36, 1), transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+
+    #preloader.is-exiting {
+      opacity: 0;
+      transform: scale(1.015);
+      pointer-events: none;
+    }
+
+    /* Main app wrapper GPU reveal */
+    #app-shell {
+      transition: opacity 480ms cubic-bezier(0.22, 1, 0.36, 1), transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+
+    #app-shell.is-hidden {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    /* Mobile slide-out sidetab drawer GPU transitions */
+    #mobile-drawer-backdrop {
+      transition: opacity 260ms ease-out;
+      will-change: opacity;
+    }
+
+    #mobile-drawer-panel {
+      transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+    }
+
+    /* View panel smooth 60fps fade/slide entrance */
+    .view-panel {
+      transition: opacity 260ms cubic-bezier(0.22, 1, 0.36, 1), transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+
+    .view-panel.is-entering {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    /* Respect reduced-motion system settings */
+    @media (prefers-reduced-motion: reduce) {
+      .animate-hud-spin,
+      .animate-dot-pulse {
+        animation: none !important;
+      }
+      #preloader,
+      #app-shell,
+      #mobile-drawer-backdrop,
+      #mobile-drawer-panel,
+      .view-panel,
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-obsidian-studio text-[#F8FAFC] font-sans antialiased selection:bg-[#D4AF37]/30 selection:text-[#F3D97E] overflow-x-hidden min-h-screen">
+
+  <!-- ======================================================================= -->
+  <!-- 1. EXACT 3.5-SECOND (3500MS) BOOT PRELOADER OVERLAY                     -->
+  <!-- ======================================================================= -->
+  <div
+    id="preloader"
+    role="status"
+    aria-live="polite"
+    class="fixed inset-0 z-50 flex flex-col items-center justify-between bg-[#06080D] px-5 py-6 sm:px-8 sm:py-8"
+  >
+    <!-- Top Studio Telemetry Header -->
+    <div class="w-full max-w-5xl flex items-center justify-between font-mono text-[10px] sm:text-xs tracking-[0.22em] text-[#94A3B8] uppercase">
+      <span>ESTD 2026 // INDONESIA</span>
+      <span class="inline-flex items-center gap-2 text-[#D4AF37]">
+        <span class="h-1.5 w-1.5 rounded-full bg-[#38BDF8] animate-dot-pulse"></span>
+        <span>BOOT // 3.5S</span>
+      </span>
+    </div>
+
+    <!-- Center Brand Lockup & 3500ms Progress Module -->
+    <div class="flex flex-col items-center text-center w-full max-w-sm">
+      <!-- Metallic Gold Mandala-Eye Emblem inside GPU-Rotating Gold HUD Ring -->
+      <div class="relative flex items-center justify-center w-36 h-36 sm:w-40 sm:h-40 mb-7">
+        <svg
+          class="absolute inset-0 w-full h-full animate-hud-spin"
+          viewBox="0 0 160 160"
+          fill="none"
+          aria-hidden="true"
+        >
+          <circle
+            cx="80"
+            cy="80"
+            r="75"
+            stroke="rgba(212, 175, 55, 0.22)"
+            stroke-width="1.25"
+            stroke-dasharray="8 6"
+          />
+          <path
+            d="M80 5 A75 75 0 0 1 146 43"
+            stroke="#F3D97E"
+            stroke-width="2.2"
+            stroke-linecap="round"
+          />
+          <path
+            d="M80 155 A75 75 0 0 1 14 117"
+            stroke="#D4AF37"
+            stroke-width="2.2"
+            stroke-linecap="round"
+          />
+          <circle cx="80" cy="5" r="2.5" fill="#38BDF8" />
+        </svg>
+
+        <div id="preloader-logo-slot" class="relative z-10 w-24 h-24 sm:w-28 sm:h-28"></div>
+      </div>
+
+      <!-- Bold Wordmark & Subtitle -->
+      <h2 class="font-display text-2xl sm:text-3xl font-bold tracking-[0.22em] text-[#F8FAFC]">
+        DIGIHUSTLECO
+      </h2>
+      <p class="mt-1.5 mb-7 font-mono text-[10px] sm:text-[11px] font-medium tracking-[0.2em] text-[#D4AF37] uppercase">
+        INDONESIAN DIGITAL MEDIA &amp; AI VENTURE HUB
+      </p>
+
+      <!-- Live Monospace Status & GPU ScaleX Progress Bar -->
+      <div class="w-full rounded-2xl card-surface-gold p-4">
+        <div class="flex items-center justify-between gap-2 font-mono text-[10px] sm:text-[11px] mb-2.5">
+          <span id="preloader-status" class="text-[#F3D97E] tracking-[0.12em] uppercase truncate">
+            INITIALIZING DIGIHUSTLECO...
+          </span>
+          <span id="preloader-percent" class="text-[#94A3B8] font-semibold tabular-nums shrink-0">
+            0%
+          </span>
+        </div>
+
+        <div class="h-1.5 w-full overflow-hidden rounded-full bg-[#06080D] border border-white/[0.08]">
+          <div
+            id="preloader-bar"
+            style="transform: scaleX(0); transform-origin: left;"
+            class="h-full w-full rounded-full bg-gradient-to-r from-[#8F6D14] via-[#D4AF37] to-[#F3D97E] will-change-transform"
+          ></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Studio Tagline -->
+    <div class="font-mono text-[10px] tracking-[0.24em] text-[#94A3B8]/75 uppercase text-center">
+      BUILT FOR THE CREATOR COMMUNITY &bull; FOR THE LOVE OF THE GAME
+    </div>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- 2. MAIN APPLICATION SHELL (DESKTOP FIXED SIDEBAR + MOBILE NAVIGATION)   -->
+  <!-- ======================================================================= -->
+  <div id="app-shell" class="is-hidden min-h-screen flex flex-col md:flex-row">
+
+    <!-- ===================================================================== -->
+    <!-- A. DESKTOP FIXED LEFT SIDEBAR (260PX WIDE, VISIBLE >= 768PX)          -->
+    <!-- ===================================================================== -->
+    <aside
+      aria-label="Desktop Studio Sidebar"
+      class="hidden md:flex md:w-[260px] md:shrink-0 md:flex-col md:justify-between md:fixed md:inset-y-0 md:left-0 z-30 bg-[#0D111A] border-r border-white/[0.08] px-4 py-6"
+    >
+      <!-- Top Brand Lockup & Navigation Tabs -->
+      <div>
+        <a
+          href="#home"
+          data-nav-target="home"
+          class="flex items-center gap-3 rounded-2xl bg-[#06080D] border border-white/[0.08] p-3 mb-7 group"
+        >
+          <div id="desktop-sidebar-logo" class="w-10 h-10 shrink-0"></div>
+          <div class="min-w-0">
+            <div class="font-display text-sm font-bold tracking-[0.16em] text-[#F8FAFC] group-hover:text-[#F3D97E] transition-colors truncate">
+              DIGIHUSTLECO
+            </div>
+            <div class="flex items-center gap-1.5 mt-0.5">
+              <span class="h-1.5 w-1.5 rounded-full bg-[#38BDF8] animate-dot-pulse"></span>
+              <span class="font-mono text-[10px] tracking-[0.18em] text-[#D4AF37] uppercase">
+                ESTD 2026
+              </span>
+            </div>
+          </div>
+        </a>
+
+        <div class="px-2 mb-2.5 font-mono text-[10px] font-semibold tracking-[0.2em] text-[#94A3B8] uppercase">
+          STUDIO DIRECTORY
+        </div>
+
+        <!-- Vertical Sidetabs -->
+        <nav aria-label="Main Navigation" class="space-y-1.5">
+          <a
+            href="#home"
+            data-nav-target="home"
+            class="nav-tab-desktop flex items-center justify-between rounded-r-xl rounded-l-sm border-l-2 border-transparent px-3.5 py-3 text-sm font-medium text-[#94A3B8] hover:text-[#F8FAFC] hover:bg-white/[0.03] transition-colors"
+          >
+            <span class="flex items-center gap-3">
+              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+              </svg>
+              <span>Homepage</span>
+            </span>
+            <span class="font-mono text-[10px] opacity-60">01</span>
+          </a>
+
+          <a
+            href="#products"
+            data-nav-target="products"
+            class="nav-tab-desktop flex items-center justify-between rounded-r-xl rounded-l-sm border-l-2 border-transparent px-3.5 py-3 text-sm font-medium text-[#94A3B8] hover:text-[#F8FAFC] hover:bg-white/[0.03] transition-colors"
+          >
+            <span class="flex items-center gap-3">
+              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="7" height="7" x="3" y="3" rx="1" />
+                <rect width="7" height="7" x="14" y="3" rx="1" />
+                <rect width="7" height="7" x="14" y="14" rx="1" />
+                <rect width="7" height="7" x="3" y="14" rx="1" />
+              </svg>
+              <span>Products</span>
+            </span>
+            <span class="rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/35 px-1.5 py-0.5 font-mono text-[9px] font-semibold text-[#F3D97E]">
+              3
+            </span>
+          </a>
+
+          <a
+            href="#socials"
+            data-nav-target="socials"
+            class="nav-tab-desktop flex items-center justify-between rounded-r-xl rounded-l-sm border-l-2 border-transparent px-3.5 py-3 text-sm font-medium text-[#94A3B8] hover:text-[#F8FAFC] hover:bg-white/[0.03] transition-colors"
+          >
+            <span class="flex items-center gap-3">
+              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="18" cy="5" r="3" />
+                <circle cx="6" cy="12" r="3" />
+                <circle cx="18" cy="19" r="3" />
+                <line x1="8.59" x2="15.42" y1="13.51" y2="17.49" />
+                <line x1="15.41" x2="8.59" y1="6.51" y2="10.49" />
+              </svg>
+              <span>Social Media</span>
+            </span>
+            <span class="font-mono text-[10px] opacity-60">03</span>
+          </a>
+
+          <a
+            href="#contact"
+            data-nav-target="contact"
+            class="nav-tab-desktop flex items-center justify-between rounded-r-xl rounded-l-sm border-l-2 border-transparent px-3.5 py-3 text-sm font-medium text-[#94A3B8] hover:text-[#F8FAFC] hover:bg-white/[0.03] transition-colors"
+          >
+            <span class="flex items-center gap-3">
+              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="20" height="16" x="2" y="4" rx="2" />
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+              </svg>
+              <span>Contact &amp; Inquiry</span>
+            </span>
+            <span class="font-mono text-[10px] opacity-60">04</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Sidebar Footer: Quick-Copy Official Email + Replay 3.5s Intro -->
+      <div class="space-y-2.5 pt-4 border-t border-white/[0.08]">
+        <button
+          type="button"
+          data-copy-email="true"
+          title="Copy digihustleofficial@gmail.com"
+          class="w-full flex items-center justify-between gap-2 rounded-xl bg-[#06080D] border border-white/[0.08] hover:border-[#D4AF37]/45 active:scale-[0.985] px-3 py-2.5 text-left transition-transform duration-150 cursor-pointer group"
+        >
+          <div class="min-w-0">
+            <span class="block font-mono text-[9px] tracking-[0.16em] text-[#94A3B8] uppercase">
+              INQUIRY EMAIL (TAP TO COPY)
+            </span>
+            <span class="block font-mono text-[11px] font-medium text-[#F3D97E] truncate mt-0.5">
+              digihustleofficial@gmail.com
+            </span>
+          </div>
+          <svg class="w-3.5 h-3.5 text-[#D4AF37] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+            <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+          </svg>
+        </button>
+
+        <button
+          type="button"
+          data-replay-intro="true"
+          class="w-full flex items-center justify-center gap-2 rounded-xl bg-[#D4AF37]/10 border border-[#D4AF37]/30 hover:bg-[#D4AF37]/20 active:scale-[0.985] px-3 py-2.5 font-mono text-[11px] font-semibold tracking-[0.14em] text-[#F3D97E] uppercase transition-transform duration-150 cursor-pointer"
+        >
+          <svg class="w-3.5 h-3.5 text-[#D4AF37] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+            <path d="M3 3v5h5" />
+          </svg>
+          <span>Replay 3.5s Intro</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ===================================================================== -->
+    <!-- B. MOBILE STICKY TOP HEADER (< 768PX)                                 -->
+    <!-- ===================================================================== -->
+    <header class="md:hidden sticky top-0 z-30 flex items-center justify-between bg-[#0D111A] border-b border-white/[0.08] px-4 py-3">
+      <a href="#home" data-nav-target="home" class="flex items-center gap-2.5 min-w-0">
+        <div id="mobile-header-logo" class="w-8 h-8 shrink-0"></div>
+        <div class="min-w-0">
+          <span class="block font-display text-sm font-bold tracking-[0.16em] text-[#F8FAFC] truncate">
+            DIGIHUSTLECO
+          </span>
+          <span class="block font-mono text-[9px] tracking-[0.18em] text-[#D4AF37] uppercase">
+            ESTD 2026 &bull; INDONESIA
+          </span>
+        </div>
+      </a>
+
+      <button
+        id="mobile-menu-open-btn"
+        type="button"
+        aria-label="Open Studio Sidetab Drawer"
+        aria-expanded="false"
+        aria-controls="mobile-drawer"
+        class="inline-flex items-center gap-2 rounded-xl bg-[#06080D] border border-[#D4AF37]/35 active:scale-95 px-3.5 py-2 font-mono text-xs font-semibold tracking-[0.14em] text-[#F3D97E] uppercase transition-transform duration-150 cursor-pointer"
+      >
+        <svg class="w-4 h-4 text-[#D4AF37]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="4" x2="20" y1="6" y2="6" />
+          <line x1="4" x2="20" y1="12" y2="12" />
+          <line x1="4" x2="20" y1="18" y2="18" />
+        </svg>
+        <span>Menu</span>
+      </button>
+    </header>
+
+    <!-- ===================================================================== -->
+    <!-- C. MOBILE SLIDE-OUT SIDETAB DRAWER (< 768PX, GPU TRANSLATEX)          -->
+    <!-- ===================================================================== -->
+    <div
+      id="mobile-drawer"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Mobile Navigation Drawer"
+      class="md:hidden fixed inset-0 z-40 hidden"
+    >
+      <!-- Dimmed Backdrop -->
+      <div
+        id="mobile-drawer-backdrop"
+        class="fixed inset-0 bg-[#06080D]/80 opacity-0"
+      ></div>
+
+      <!-- Slide-out Panel -->
+      <div
+        id="mobile-drawer-panel"
+        style="transform: translateX(-100%);"
+        class="relative z-10 flex h-full w-[280px] max-w-[82vw] flex-col justify-between bg-[#0D111A] border-r border-white/[0.08] px-4 py-5"
+      >
+        <div>
+          <!-- Drawer Top Row -->
+          <div class="flex items-center justify-between pb-4 mb-5 border-b border-white/[0.08]">
+            <div class="flex items-center gap-2.5">
+              <div id="mobile-drawer-logo" class="w-8 h-8 shrink-0"></div>
+              <div>
+                <div class="font-display text-sm font-bold tracking-[0.16em] text-[#F8FAFC]">
+                  DIGIHUSTLECO
+                </div>
+                <div class="font-mono text-[9px] tracking-[0.18em] text-[#D4AF37] uppercase">
+                  ESTD 2026
+                </div>
+              </div>
+            </div>
+
+            <button
+              id="mobile-menu-close-btn"
+              type="button"
+              aria-label="Close Studio Sidetab Drawer"
+              class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#06080D] border border-white/[0.08] text-[#94A3B8] hover:text-[#F8FAFC] cursor-pointer"
+            >
+              &#10005;
+            </button>
+          </div>
+
+          <div class="px-2 mb-2 font-mono text-[10px] font-semibold tracking-[0.2em] text-[#94A3B8] uppercase">
+            NAVIGATE HUB
+          </div>
+
+          <!-- Drawer Navigation Links -->
+          <nav class="space-y-1.5">
+            <a
+              href="#home"
+              data-nav-target="home"
+              class="nav-tab-drawer flex items-center justify-between rounded-r-xl rounded-l-sm border-l-2 border-transparent px-3.5 py-3 text-sm font-medium text-[#94A3B8]"
+            >
+              <span>Homepage</span>
+              <span class="font-mono text-[10px]">01</span>
+            </a>
+            <a
+              href="#products"
+              data-nav-target="products"
+              class="nav-tab-drawer flex items-center justify-between rounded-r-xl rounded-l-sm border-l-2 border-transparent px-3.5 py-3 text-sm font-medium text-[#94A3B8]"
+            >
+              <span>Products</span>
+              <span class="rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/35 px-1.5 py-0.5 font-mono text-[9px] font-semibold text-[#F3D97E]">
+                3
+              </span>
+            </a>
+            <a
+              href="#socials"
+              data-nav-target="socials"
+              class="nav-tab-drawer flex items-center justify-between rounded-r-xl rounded-l-sm border-l-2 border-transparent px-3.5 py-3 text-sm font-medium text-[#94A3B8]"
+            >
+              <span>Social Media</span>
+              <span class="font-mono text-[10px]">03</span>
+            </a>
+            <a
+              href="#contact"
+              data-nav-target="contact"
+              class="nav-tab-drawer flex items-center justify-between rounded-r-xl rounded-l-sm border-l-2 border-transparent px-3.5 py-3 text-sm font-medium text-[#94A3B8]"
+            >
+              <span>Contact &amp; Inquiry</span>
+              <span class="font-mono text-[10px]">04</span>
+            </a>
+          </nav>
+        </div>
+
+        <!-- Drawer Bottom Utilities -->
+        <div class="space-y-2.5 pt-4 border-t border-white/[0.08]">
+          <button
+            type="button"
+            data-copy-email="true"
+            class="w-full flex items-center justify-between gap-2 rounded-xl bg-[#06080D] border border-white/[0.08] px-3 py-2.5 text-left cursor-pointer"
+          >
+            <div class="min-w-0">
+              <span class="block font-mono text-[9px] tracking-[0.16em] text-[#94A3B8] uppercase">
+                COPY INQUIRY EMAIL
+              </span>
+              <span class="block font-mono text-[11px] font-medium text-[#F3D97E] truncate mt-0.5">
+                digihustleofficial@gmail.com
+              </span>
+            </div>
+            <svg class="w-3.5 h-3.5 text-[#D4AF37] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+            </svg>
+          </button>
+
+          <button
+            type="button"
+            data-replay-intro="true"
+            class="w-full flex items-center justify-center gap-2 rounded-xl bg-[#D4AF37]/10 border border-[#D4AF37]/30 px-3 py-2.5 font-mono text-[11px] font-semibold tracking-[0.14em] text-[#F3D97E] uppercase cursor-pointer"
+          >
+            <span>Replay 3.5s Intro</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- D. MAIN CONTENT VIEWPORT (OFFSET BY 260PX ON DESKTOP)                 -->
+    <!-- ===================================================================== -->
+    <main class="flex-1 md:pl-[260px] pb-28 md:pb-14">
+      <div class="mx-auto max-w-5xl px-4 pt-7 sm:px-8 sm:pt-11 lg:px-12">
+
+        <!-- ================================================================= -->
+        <!-- PAGE 1: HOMEPAGE (#home)                                          -->
+        <!-- ================================================================= -->
+        <section id="view-home" data-view="home" class="view-panel">
+          <!-- Hero Brand Card -->
+          <div class="rounded-3xl card-surface-gold p-6 sm:p-10 lg:p-12">
+            <div class="flex flex-col lg:flex-row lg:items-center gap-7 lg:gap-10">
+              <!-- Emblem Medallion -->
+              <div class="relative flex items-center justify-center w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-[#06080D] border border-[#D4AF37]/35 p-3 shrink-0">
+                <span class="absolute top-2 left-2 h-2 w-2 border-t border-l border-[#D4AF37]/80 rounded-tl-sm"></span>
+                <span class="absolute top-2 right-2 h-2 w-2 border-t border-r border-[#D4AF37]/80 rounded-tr-sm"></span>
+                <span class="absolute bottom-2 left-2 h-2 w-2 border-b border-l border-[#D4AF37]/80 rounded-bl-sm"></span>
+                <span class="absolute bottom-2 right-2 h-2 w-2 border-b border-r border-[#D4AF37]/80 rounded-br-sm"></span>
+                <div id="hero-logo-slot" class="w-full h-full"></div>
+              </div>
+
+              <!-- Title, Badge & Headline -->
+              <div class="min-w-0 flex-1">
+                <div class="inline-flex flex-wrap items-center gap-2 rounded-full bg-[#06080D] border border-[#D4AF37]/30 px-3.5 py-1.5 mb-4">
+                  <span class="h-1.5 w-1.5 rounded-full bg-[#38BDF8] animate-dot-pulse"></span>
+                  <span id="hero-badge" class="font-mono text-[10px] sm:text-xs font-semibold tracking-[0.2em] text-[#F3D97E] uppercase">
+                    ESTD 2026 &bull; INDONESIA
+                  </span>
+                </div>
+
+                <div id="hero-brand-title" class="font-display text-sm sm:text-base font-bold tracking-[0.24em] text-[#D4AF37] uppercase mb-2">
+                  DIGIHUSTLECO
+                </div>
+
+                <h1 id="hero-headline" class="font-display text-2xl sm:text-4xl lg:text-[42px] font-bold tracking-tight leading-[1.14] text-[#F8FAFC]">
+                  Empowering Digital Entrepreneurs to Build Their Optimal Digital Brand.
+                </h1>
+              </div>
+            </div>
+
+            <!-- Refined Bio -->
+            <p id="hero-bio" class="mt-6 pt-6 border-t border-white/[0.08] text-sm sm:text-base lg:text-[17px] leading-relaxed text-[#94A3B8] max-w-3xl">
+              DIGIHUSTLECO is an Indonesian digital media and AI venture hub dedicated to helping creators and digital entrepreneurs achieve their most optimal online presence. We craft free AI-powered tools and tailored digital solutions—built for the creator community, purely for the love of the game.
+            </p>
+
+            <!-- Primary Action Buttons -->
+            <div class="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
+              <a
+                href="#products"
+                data-nav-target="products"
+                class="inline-flex items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-[#D4AF37] to-[#F3D97E] hover:brightness-105 active:scale-[0.985] px-7 py-4 font-display text-sm sm:text-base font-bold text-[#06080D] transition-transform duration-150"
+              >
+                <span>Explore AI Products</span>
+                <span aria-hidden="true">&#8594;</span>
+              </a>
+
+              <a
+                href="#contact"
+                data-nav-target="contact"
+                class="inline-flex items-center justify-center gap-2.5 rounded-2xl bg-[#06080D] border border-[#D4AF37]/35 hover:border-[#F3D97E] active:scale-[0.985] px-7 py-4 font-display text-sm sm:text-base font-bold text-[#F8FAFC] transition-transform duration-150"
+              >
+                <span>Custom Build Inquiry</span>
+                <span class="text-[#D4AF37]" aria-hidden="true">&#8599;</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 3 Core Pillars Grid -->
+          <div class="mt-10">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 mb-5">
+              <div>
+                <span class="font-mono text-[11px] font-semibold tracking-[0.22em] text-[#D4AF37] uppercase">
+                  WHAT WE DO
+                </span>
+                <h2 class="mt-1 font-display text-xl sm:text-2xl font-bold text-[#F8FAFC]">
+                  Core Studio Pillars
+                </h2>
+              </div>
+              <span class="font-mono text-[11px] tracking-[0.14em] text-[#94A3B8] uppercase">
+                FREE COMMUNITY INFRASTRUCTURE
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
+              <!-- Pillar 01 -->
+              <article class="rounded-2xl card-surface p-6 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between gap-2 mb-4">
+                    <span class="font-mono text-xs font-semibold tracking-[0.16em] text-[#F3D97E] uppercase">
+                      01 / AI-BASED SERVICES
+                    </span>
+                    <span class="h-2 w-2 rounded-full bg-[#38BDF8]"></span>
+                  </div>
+                  <p class="text-sm leading-relaxed text-[#94A3B8]">
+                    Smart creator tools engineered to simplify pricing, contracts, and content strategy
+                  </p>
+                </div>
+                <div class="mt-5 pt-4 border-t border-white/[0.06] font-mono text-[10px] tracking-[0.16em] text-[#D4AF37] uppercase">
+                  CREATOR AI SUITE
+                </div>
+              </article>
+
+              <!-- Pillar 02 -->
+              <article class="rounded-2xl card-surface p-6 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between gap-2 mb-4">
+                    <span class="font-mono text-xs font-semibold tracking-[0.16em] text-[#F3D97E] uppercase">
+                      02 / CUSTOM SERVICES
+                    </span>
+                    <span class="h-2 w-2 rounded-full bg-[#D4AF37]"></span>
+                  </div>
+                  <p class="text-sm leading-relaxed text-[#94A3B8]">
+                    Bespoke web apps, AI workflows, and digital brand systems built around your vision
+                  </p>
+                </div>
+                <div class="mt-5 pt-4 border-t border-white/[0.06] font-mono text-[10px] tracking-[0.16em] text-[#D4AF37] uppercase">
+                  TAILORED EXECUTION
+                </div>
+              </article>
+
+              <!-- Pillar 03 -->
+              <article class="rounded-2xl card-surface p-6 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between gap-2 mb-4">
+                    <span class="font-mono text-xs font-semibold tracking-[0.16em] text-[#F3D97E] uppercase">
+                      03 / FOR THE LOVE OF THE GAME
+                    </span>
+                    <span class="h-2 w-2 rounded-full bg-[#38BDF8]"></span>
+                  </div>
+                  <p class="text-sm leading-relaxed text-[#94A3B8]">
+                    Community-driven resources built in Indonesia and accessible for free to help creators scale
+                  </p>
+                </div>
+                <div class="mt-5 pt-4 border-t border-white/[0.06] font-mono text-[10px] tracking-[0.16em] text-[#D4AF37] uppercase">
+                  ZERO GATEKEEPING
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <!-- Ecosystem Preview Strip -->
+          <div class="mt-10 rounded-3xl card-surface p-6 sm:p-8">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+              <div>
+                <span class="font-mono text-[11px] font-semibold tracking-[0.22em] text-[#D4AF37] uppercase">
+                  ECOSYSTEM PREVIEW
+                </span>
+                <h2 class="mt-1 font-display text-xl sm:text-2xl font-bold text-[#F8FAFC]">
+                  AI Products Built for Creators
+                </h2>
+              </div>
+              <a
+                href="#products"
+                data-nav-target="products"
+                class="inline-flex items-center justify-center gap-2 rounded-xl bg-[#D4AF37]/15 border border-[#D4AF37]/40 hover:bg-[#D4AF37]/25 active:scale-[0.985] px-4 py-2.5 font-mono text-xs font-semibold tracking-[0.14em] text-[#F3D97E] uppercase transition-transform duration-150 self-start sm:self-auto"
+              >
+                <span>Open Products Tab</span>
+                <span aria-hidden="true">&#8594;</span>
+              </a>
+            </div>
+
+            <div id="home-ecosystem-strip" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <!-- Populated dynamically from SITE_CONFIG.products -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- PAGE 2: PRODUCTS (#products)                                      -->
+        <!-- ================================================================= -->
+        <section id="view-products" data-view="products" class="view-panel hidden">
+          <!-- Page Header -->
+          <div class="mb-8">
+            <div class="inline-flex items-center gap-2 rounded-full bg-[#0D111A] border border-[#D4AF37]/30 px-3.5 py-1 mb-3">
+              <span class="h-1.5 w-1.5 rounded-full bg-[#38BDF8] animate-dot-pulse"></span>
+              <span class="font-mono text-[10px] font-semibold tracking-[0.2em] text-[#F3D97E] uppercase">
+                VENTURE SUITE // 2026
+              </span>
+            </div>
+            <h1 class="font-display text-2xl sm:text-4xl font-bold text-[#F8FAFC]">
+              DIGIHUSTLECO Product Lab
+            </h1>
+            <p class="mt-2.5 text-sm sm:text-base leading-relaxed text-[#94A3B8] max-w-2xl">
+              Our growing suite of free, purpose-built AI tools engineered to help Indonesian and global digital creators price fairly, protect their rights, and scale smarter.
+            </p>
+          </div>
+
+          <!-- Dynamic Product Cards Container (Rendered from SITE_CONFIG.products) -->
+          <div id="products-grid" class="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6">
+            <!-- Populated dynamically via renderProducts() -->
+          </div>
+
+          <!-- Bottom Community Suggestion Callout Card -->
+          <div class="mt-8 rounded-3xl card-surface-gold p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-5">
+            <div>
+              <span class="font-mono text-[10px] font-semibold tracking-[0.2em] text-[#38BDF8] uppercase">
+                ROADMAP &amp; COMMUNITY REQUESTS
+              </span>
+              <h2 class="mt-1 font-display text-lg sm:text-xl font-bold text-[#F8FAFC]">
+                More Ecosystem Tools Incoming
+              </h2>
+              <p class="mt-1.5 text-sm leading-relaxed text-[#94A3B8]">
+                Have an idea for a tool that helps digital creators? Suggest it in our Telegram community.
+              </p>
+            </div>
+            <a
+              id="products-telegram-cta"
+              href="https://t.me/digihustleco"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-[#D4AF37] to-[#F3D97E] hover:brightness-105 active:scale-[0.985] px-6 py-3.5 font-display text-sm font-bold text-[#06080D] shrink-0 transition-transform duration-150"
+            >
+              <span>Suggest on Telegram</span>
+              <span aria-hidden="true">&#8599;</span>
+            </a>
+          </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- PAGE 3: SOCIAL MEDIA (#socials)                                   -->
+        <!-- ================================================================= -->
+        <section id="view-socials" data-view="socials" class="view-panel hidden">
+          <!-- Page Header -->
+          <div class="mb-8">
+            <div class="inline-flex items-center gap-2 rounded-full bg-[#0D111A] border border-[#D4AF37]/30 px-3.5 py-1 mb-3">
+              <span class="h-1.5 w-1.5 rounded-full bg-[#D4AF37]"></span>
+              <span class="font-mono text-[10px] font-semibold tracking-[0.2em] text-[#F3D97E] uppercase">
+                CONNECT WITH THE HUB
+              </span>
+            </div>
+            <h1 class="font-display text-2xl sm:text-4xl font-bold text-[#F8FAFC]">
+              Official Channels &amp; Community
+            </h1>
+            <p class="mt-2.5 text-sm sm:text-base leading-relaxed text-[#94A3B8] max-w-2xl">
+              Follow our official releases, join live creator discussions, and get first access to upcoming AI tools straight from Indonesia.
+            </p>
+          </div>
+
+          <!-- 2 Official Channel Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Card 1: Instagram (@digihustleco) -->
+            <article class="rounded-3xl card-surface-gold p-6 sm:p-8 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between gap-3 mb-6">
+                  <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#D4AF37]/15 border border-[#D4AF37]/35 text-[#F3D97E]">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                    </svg>
+                  </div>
+                  <span class="rounded-full bg-[#06080D] border border-white/[0.08] px-3 py-1 font-mono text-[11px] font-medium text-[#F3D97E]">
+                    @digihustleco
+                  </span>
+                </div>
+
+                <h2 class="font-display text-xl sm:text-2xl font-bold text-[#F8FAFC] mb-2.5">
+                  Instagram
+                </h2>
+                <p class="text-sm sm:text-[15px] leading-relaxed text-[#94A3B8] mb-7">
+                  Product launches, visual brand drops, creator insights, and behind-the-scenes updates from Indonesia.
+                </p>
+              </div>
+
+              <a
+                id="socials-ig-link"
+                href="https://www.instagram.com/digihustleco?evlk=MXdjcnBsOGJ3bjZmdA=="
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-[#D4AF37] to-[#F3D97E] hover:brightness-105 active:scale-[0.985] px-6 py-3.5 font-display text-sm sm:text-base font-bold text-[#06080D] transition-transform duration-150"
+              >
+                <span>Visit Instagram</span>
+                <span aria-hidden="true">&#8599;</span>
+              </a>
+            </article>
+
+            <!-- Card 2: Telegram Community (t.me/digihustleco) -->
+            <article class="rounded-3xl card-surface p-6 sm:p-8 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between gap-3 mb-6">
+                  <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#38BDF8]/12 border border-[#38BDF8]/30 text-[#38BDF8]">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="m22 2-7 20-4-9-9-4Z" />
+                      <path d="M22 2 11 13" />
+                    </svg>
+                  </div>
+                  <span class="rounded-full bg-[#06080D] border border-white/[0.08] px-3 py-1 font-mono text-[11px] font-medium text-[#38BDF8]">
+                    t.me/digihustleco
+                  </span>
+                </div>
+
+                <h2 class="font-display text-xl sm:text-2xl font-bold text-[#F8FAFC] mb-2.5">
+                  Telegram Community
+                </h2>
+                <p class="text-sm sm:text-[15px] leading-relaxed text-[#94A3B8] mb-7">
+                  Join our open creator group for early beta access to KontrakAman AI &amp; IdeLokal AI, feature requests, and direct community discussion.
+                </p>
+              </div>
+
+              <a
+                id="socials-tg-link"
+                href="https://t.me/digihustleco"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center justify-center gap-2.5 rounded-2xl bg-[#06080D] border border-[#D4AF37]/40 hover:border-[#F3D97E] active:scale-[0.985] px-6 py-3.5 font-display text-sm sm:text-base font-bold text-[#F8FAFC] transition-transform duration-150"
+              >
+                <span>Join Telegram Group</span>
+                <span class="text-[#D4AF37]" aria-hidden="true">&#8599;</span>
+              </a>
+            </article>
+          </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- PAGE 4: CONTACT & INQUIRY (#contact)                              -->
+        <!-- ================================================================= -->
+        <section id="view-contact" data-view="contact" class="view-panel hidden">
+          <!-- Page Header -->
+          <div class="mb-8">
+            <div class="inline-flex items-center gap-2 rounded-full bg-[#0D111A] border border-[#D4AF37]/30 px-3.5 py-1 mb-3">
+              <span class="h-1.5 w-1.5 rounded-full bg-[#38BDF8] animate-dot-pulse"></span>
+              <span class="font-mono text-[10px] font-semibold tracking-[0.2em] text-[#F3D97E] uppercase">
+                CUSTOM DEVELOPMENT &amp; COLLABORATIONS
+              </span>
+            </div>
+            <h1 class="font-display text-2xl sm:text-4xl font-bold text-[#F8FAFC]">
+              App Development &amp; Business Inquiries
+            </h1>
+            <p class="mt-2.5 text-sm sm:text-base leading-relaxed text-[#94A3B8] max-w-2xl">
+              Looking for custom app development, AI-based service integration, or a bespoke digital brand solution? Connect directly with our team.
+            </p>
+          </div>
+
+          <!-- Prominent Direct Email Card -->
+          <div class="rounded-3xl card-surface-gold p-6 sm:p-8 mb-7">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+              <div class="min-w-0">
+                <span class="block font-mono text-[10px] font-semibold tracking-[0.2em] text-[#D4AF37] uppercase mb-1.5">
+                  DIRECT STUDIO INBOX
+                </span>
+                <div class="font-mono text-base sm:text-xl lg:text-2xl font-bold text-[#F8FAFC] break-all">
+                  digihustleofficial@gmail.com
+                </div>
+              </div>
+
+              <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
+                <button
+                  id="contact-copy-email-btn"
+                  type="button"
+                  data-copy-email="true"
+                  class="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#D4AF37] to-[#F3D97E] hover:brightness-105 active:scale-[0.985] px-5 py-3.5 font-display text-sm font-bold text-[#06080D] transition-transform duration-150 cursor-pointer"
+                >
+                  <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                    <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                  </svg>
+                  <span id="contact-copy-email-label">Copy Email</span>
+                </button>
+
+                <a
+                  href="mailto:digihustleofficial@gmail.com?subject=DIGIHUSTLECO%20Inquiry"
+                  class="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#06080D] border border-[#D4AF37]/40 hover:border-[#F3D97E] active:scale-[0.985] px-5 py-3.5 font-display text-sm font-bold text-[#F8FAFC] transition-transform duration-150"
+                >
+                  <svg class="w-4 h-4 text-[#D4AF37] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect width="20" height="16" x="2" y="4" rx="2" />
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                  </svg>
+                  <span>Open Mail App</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Static Inquiry Brief Builder -->
+          <div class="rounded-3xl card-surface p-6 sm:p-8">
+            <div class="mb-6">
+              <span class="font-mono text-[10px] font-semibold tracking-[0.2em] text-[#38BDF8] uppercase">
+                CLIENT-SIDE BRIEF GENERATOR
+              </span>
+              <h2 class="mt-1 font-display text-xl sm:text-2xl font-bold text-[#F8FAFC]">
+                Interactive Inquiry Brief Builder
+              </h2>
+              <p class="mt-1 text-sm text-[#94A3B8]">
+                Select a service category and fill in your scope to generate a ready-to-send email or clipboard brief.
+              </p>
+            </div>
+
+            <form id="inquiry-builder-form" class="space-y-6" onsubmit="return false;">
+              <!-- Service Category Pills -->
+              <div>
+                <label class="block font-mono text-[11px] font-semibold tracking-[0.16em] text-[#F3D97E] uppercase mb-3">
+                  1. SELECT SERVICE CATEGORY
+                </label>
+                <div id="service-category-pills" class="flex flex-wrap gap-2.5">
+                  <button
+                    type="button"
+                    data-category="Custom App / Web Development"
+                    class="category-pill rounded-xl border border-[#D4AF37] bg-[#D4AF37]/15 px-4 py-2.5 font-mono text-xs font-semibold text-[#F3D97E] transition-colors cursor-pointer"
+                  >
+                    Custom App / Web Development
+                  </button>
+                  <button
+                    type="button"
+                    data-category="AI-Based Service"
+                    class="category-pill rounded-xl border border-white/[0.08] bg-[#06080D] px-4 py-2.5 font-mono text-xs font-medium text-[#94A3B8] hover:text-[#F8FAFC] transition-colors cursor-pointer"
+                  >
+                    AI-Based Service
+                  </button>
+                  <button
+                    type="button"
+                    data-category="Digital Brand System"
+                    class="category-pill rounded-xl border border-white/[0.08] bg-[#06080D] px-4 py-2.5 font-mono text-xs font-medium text-[#94A3B8] hover:text-[#F8FAFC] transition-colors cursor-pointer"
+                  >
+                    Digital Brand System
+                  </button>
+                  <button
+                    type="button"
+                    data-category="Business Partnership"
+                    class="category-pill rounded-xl border border-white/[0.08] bg-[#06080D] px-4 py-2.5 font-mono text-xs font-medium text-[#94A3B8] hover:text-[#F8FAFC] transition-colors cursor-pointer"
+                  >
+                    Business Partnership
+                  </button>
+                </div>
+              </div>
+
+              <!-- Two-Column Inputs -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="inquiry-name" class="block font-mono text-[11px] font-semibold tracking-[0.14em] text-[#94A3B8] uppercase mb-2">
+                    2. NAME / BRAND
+                  </label>
+                  <input
+                    id="inquiry-name"
+                    type="text"
+                    placeholder="e.g., Raka / Nusantara Creator Studio"
+                    class="w-full rounded-xl bg-[#06080D] border border-white/[0.1] focus:border-[#D4AF37] focus:outline-none px-4 py-3 text-sm text-[#F8FAFC] placeholder-[#94A3B8]/50"
+                  />
+                </div>
+
+                <div>
+                  <label for="inquiry-contact" class="block font-mono text-[11px] font-semibold tracking-[0.14em] text-[#94A3B8] uppercase mb-2">
+                    3. CONTACT HANDLE / EMAIL
+                  </label>
+                  <input
+                    id="inquiry-contact"
+                    type="text"
+                    placeholder="e.g., @yourhandle or you@domain.com"
+                    class="w-full rounded-xl bg-[#06080D] border border-white/[0.1] focus:border-[#D4AF37] focus:outline-none px-4 py-3 text-sm text-[#F8FAFC] placeholder-[#94A3B8]/50"
+                  />
+                </div>
+              </div>
+
+              <!-- Project Brief Textarea -->
+              <div>
+                <label for="inquiry-brief" class="block font-mono text-[11px] font-semibold tracking-[0.14em] text-[#94A3B8] uppercase mb-2">
+                  4. PROJECT BRIEF &amp; GOALS
+                </label>
+                <textarea
+                  id="inquiry-brief"
+                  rows="4"
+                  placeholder="Describe what you want to build, your target timeline, or how DIGIHUSTLECO can help your brand..."
+                  class="w-full rounded-xl bg-[#06080D] border border-white/[0.1] focus:border-[#D4AF37] focus:outline-none px-4 py-3 text-sm text-[#F8FAFC] placeholder-[#94A3B8]/50 resize-y"
+                ></textarea>
+              </div>
+
+              <!-- Action Buttons: Send via Email App + Copy Brief to Clipboard -->
+              <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
+                <button
+                  id="send-via-email-btn"
+                  type="button"
+                  class="inline-flex items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-[#D4AF37] to-[#F3D97E] hover:brightness-105 active:scale-[0.985] px-6 py-4 font-display text-sm sm:text-base font-bold text-[#06080D] transition-transform duration-150 cursor-pointer"
+                >
+                  <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m22 2-7 20-4-9-9-4Z" />
+                    <path d="M22 2 11 13" />
+                  </svg>
+                  <span>Send via Email App</span>
+                </button>
+
+                <button
+                  id="copy-brief-btn"
+                  type="button"
+                  class="inline-flex items-center justify-center gap-2.5 rounded-2xl bg-[#06080D] border border-[#D4AF37]/40 hover:border-[#F3D97E] active:scale-[0.985] px-6 py-4 font-display text-sm sm:text-base font-bold text-[#F8FAFC] transition-transform duration-150 cursor-pointer"
+                >
+                  <svg class="w-4 h-4 text-[#D4AF37] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                    <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                  </svg>
+                  <span id="copy-brief-label">Copy Brief to Clipboard</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- ===================================================================== -->
+    <!-- E. MOBILE FIXED BOTTOM 4-TAB NAVIGATION BAR (< 768PX)                 -->
+    <!-- ===================================================================== -->
+    <nav
+      aria-label="Mobile Quick Tab Bar"
+      class="md:hidden fixed bottom-0 inset-x-0 z-30 bg-[#0D111A] border-t border-white/[0.08] px-2 py-1.5"
+    >
+      <div class="grid grid-cols-4 gap-1">
+        <a
+          href="#home"
+          data-nav-target="home"
+          class="nav-tab-bottom flex flex-col items-center justify-center rounded-xl py-2 px-1 text-[#94A3B8] transition-colors"
+        >
+          <svg class="w-4 h-4 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <polyline points="9 22 9 12 15 12 15 22" />
+          </svg>
+          <span class="font-mono text-[10px] font-medium tracking-wide">Home</span>
+        </a>
+
+        <a
+          href="#products"
+          data-nav-target="products"
+          class="nav-tab-bottom flex flex-col items-center justify-center rounded-xl py-2 px-1 text-[#94A3B8] transition-colors"
+        >
+          <svg class="w-4 h-4 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect width="7" height="7" x="3" y="3" rx="1" />
+            <rect width="7" height="7" x="14" y="3" rx="1" />
+            <rect width="7" height="7" x="14" y="14" rx="1" />
+            <rect width="7" height="7" x="3" y="14" rx="1" />
+          </svg>
+          <span class="font-mono text-[10px] font-medium tracking-wide">Products</span>
+        </a>
+
+        <a
+          href="#socials"
+          data-nav-target="socials"
+          class="nav-tab-bottom flex flex-col items-center justify-center rounded-xl py-2 px-1 text-[#94A3B8] transition-colors"
+        >
+          <svg class="w-4 h-4 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="18" cy="5" r="3" />
+            <circle cx="6" cy="12" r="3" />
+            <circle cx="18" cy="19" r="3" />
+            <line x1="8.59" x2="15.42" y1="13.51" y2="17.49" />
+            <line x1="15.41" x2="8.59" y1="6.51" y2="10.49" />
+          </svg>
+          <span class="font-mono text-[10px] font-medium tracking-wide">Socials</span>
+        </a>
+
+        <a
+          href="#contact"
+          data-nav-target="contact"
+          class="nav-tab-bottom flex flex-col items-center justify-center rounded-xl py-2 px-1 text-[#94A3B8] transition-colors"
+        >
+          <svg class="w-4 h-4 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect width="20" height="16" x="2" y="4" rx="2" />
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+          </svg>
+          <span class="font-mono text-[10px] font-medium tracking-wide">Inquiry</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- 3. TOAST NOTIFICATION BANNER (ZERO ALERT() DIALOGS)                     -->
+  <!-- ======================================================================= -->
+  <div
+    id="toast-banner"
+    role="status"
+    aria-live="polite"
+    class="pointer-events-none fixed bottom-20 md:bottom-7 left-1/2 z-50 -translate-x-1/2 translate-y-4 opacity-0 transition-all duration-300 ease-out max-w-[92vw]"
+  >
+    <div class="inline-flex items-center gap-2.5 rounded-full bg-[#0D111A] border border-[#D4AF37]/55 px-4 py-2.5">
+      <span class="h-2 w-2 rounded-full bg-[#38BDF8] shrink-0"></span>
+      <span id="toast-message" class="font-mono text-[11px] font-semibold tracking-[0.12em] text-[#F3D97E] uppercase truncate">
+        COPIED TO CLIPBOARD
+      </span>
+    </div>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- 4. CENTRALIZED SITE_CONFIG & 60FPS APPLICATION CONTROLLER               -->
+  <!-- ======================================================================= -->
+  <script>
+    /**
+     * =========================================================================
+     * SITE_CONFIG — SINGLE SOURCE OF TRUTH FOR DIGIHUSTLECO (ESTD 2026)
+     * =========================================================================
+     * Add future AI products directly to `SITE_CONFIG.products` and they will
+     * automatically render on both the Homepage Ecosystem Strip and Products Lab.
+     */
+    const SITE_CONFIG = {
+      brand: {
+        name: "DIGIHUSTLECO",
+        badge: "ESTD 2026 • INDONESIA",
+        headline: "Empowering Digital Entrepreneurs to Build Their Optimal Digital Brand.",
+        bio: "DIGIHUSTLECO is an Indonesian digital media and AI venture hub dedicated to helping creators and digital entrepreneurs achieve their most optimal online presence. We craft free AI-powered tools and tailored digital solutions—built for the creator community, purely for the love of the game.",
+        email: "digihustleofficial@gmail.com",
+        // Optional: set to "./logo.png" if you upload a PNG to GitHub;
+        // leave empty ("") to render the crisp metallic gold vector emblem.
+        logoImageUrl: ""
+      },
+      socials: {
+        instagram: {
+          handle: "@digihustleco",
+          url: "https://www.instagram.com/digihustleco?evlk=MXdjcnBsOGJ3bjZmdA=="
+        },
+        telegram: {
+          handle: "t.me/digihustleco",
+          url: "https://t.me/digihustleco"
+        }
+      },
+      products: [
+        {
+          id: "dealsendiri-ai",
+          name: "DealSendiri AI",
+          badge: "LIVE PRODUCT",
+          isLive: true,
+          tagline: "Creator Endorsement Valuation Engine",
+          description: "Helps content creators accurately value their worth, benchmark audience engagement, and calculate fair sponsorship and endorsement rates before negotiating with brands.",
+          ctaLabel: "Launch DealSendiri AI",
+          // Replace "#" with your live DealSendiri AI URL when ready (e.g., "https://dealsendiri.digihustleco.com")
+          url: "#"
+        },
+        {
+          id: "kontrakaman-ai",
+          name: "KontrakAman AI",
+          badge: "INCOMING",
+          isLive: false,
+          tagline: "AI Sponsorship & Brand Contract Guard",
+          description: "Intelligent contract review assistant built to help creators break down endorsement agreements, flag unfair usage or exclusivity clauses, and protect their rights before signing.",
+          ctaLabel: "Get Early Access on Telegram",
+          url: "https://t.me/digihustleco"
+        },
+        {
+          id: "idelokal-ai",
+          name: "IdeLokal AI",
+          badge: "INCOMING",
+          isLive: false,
+          tagline: "Indonesian Content & Brand Strategy Engine",
+          description: "Localized AI creative co-pilot tailored for Indonesian creators and digital entrepreneurs to generate culturally resonant content angles, campaign hooks, and brand positioning.",
+          ctaLabel: "Get Early Access on Telegram",
+          url: "https://t.me/digihustleco"
+        }
+      ],
+      preloaderDurationMs: 3500
+    };
+
+    /**
+     * =========================================================================
+     * METALLIC GOLD 8-POINTED GEOMETRIC MANDALA-EYE EMBLEM (PURE VECTOR SVG)
+     * =========================================================================
+     */
+    function createMandalaEyeSVG(uid) {
+      return `
+        <svg viewBox="0 0 200 200" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="DIGIHUSTLECO Metallic Gold Mandala Eye Emblem">
+          <defs>
+            <linearGradient id="${uid}-gold-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#F3D97E" />
+              <stop offset="50%" stop-color="#D4AF37" />
+              <stop offset="100%" stop-color="#8F6D14" />
+            </linearGradient>
+            <linearGradient id="${uid}-gold-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#F3D97E" />
+              <stop offset="55%" stop-color="#D4AF37" />
+              <stop offset="100%" stop-color="#8F6D14" />
+            </linearGradient>
+            <radialGradient id="${uid}-bronze-core" cx="50%" cy="45%" r="55%">
+              <stop offset="0%" stop-color="#6B4212" />
+              <stop offset="70%" stop-color="#2E1904" />
+              <stop offset="100%" stop-color="#140A02" />
+            </radialGradient>
+          </defs>
+
+          <!-- 8-Pointed Geometric Mandala Star -->
+          <g stroke="url(#${uid}-gold-stroke)" stroke-width="2.4" stroke-linejoin="round">
+            <polygon
+              points="100,10 163.6,36.4 190,100 163.6,163.6 100,190 36.4,163.6 10,100 36.4,36.4"
+              fill="url(#${uid}-bronze-core)"
+            />
+            <polygon
+              points="100,10 132,68 190,100 132,132 100,190 68,132 10,100 68,68"
+              fill="url(#${uid}-gold-fill)"
+              fill-opacity="0.22"
+            />
+            <polygon
+              points="36.4,36.4 100,54 163.6,36.4 146,100 163.6,163.6 100,146 36.4,163.6 54,100"
+              fill="url(#${uid}-gold-fill)"
+              fill-opacity="0.16"
+            />
+          </g>
+
+          <!-- Geometric Facets -->
+          <g stroke="url(#${uid}-gold-stroke)" stroke-width="1.35" stroke-opacity="0.85">
+            <line x1="100" y1="10" x2="100" y2="54" />
+            <line x1="100" y1="190" x2="100" y2="146" />
+            <line x1="100" y1="100" x2="54" y2="100" />
+            <line x1="190" y1="100" x2="146" y2="100" />
+            <line x1="36.4" y1="36.4" x2="68" y2="68" />
+            <line x1="163.6" y1="36.4" x2="132" y2="68" />
+            <line x1="36.4" y1="163.6" x2="68" y2="132" />
+            <line x1="163.6" y1="163.6" x2="132" y2="132" />
+            <polygon points="100,32 148,52 168,100 148,148 100,168 52,148 32,100 52,52" fill="none" />
+          </g>
+
+          <!-- Center Medallion Disc -->
+          <circle
+            cx="100"
+            cy="100"
+            r="44"
+            fill="url(#${uid}-bronze-core)"
+            stroke="url(#${uid}-gold-stroke)"
+            stroke-width="2.5"
+          />
+
+          <!-- Stylized Eye Motif -->
+          <path
+            d="M64 100 C75 81, 125 81, 136 100 C125 119, 75 119, 64 100 Z"
+            fill="#1A0E03"
+            stroke="url(#${uid}-gold-stroke)"
+            stroke-width="2.5"
+            stroke-linejoin="round"
+          />
+          <circle
+            cx="100"
+            cy="100"
+            r="13"
+            fill="url(#${uid}-gold-fill)"
+            fill-opacity="0.26"
+            stroke="url(#${uid}-gold-stroke)"
+            stroke-width="2.2"
+          />
+          <circle
+            cx="100"
+            cy="100"
+            r="6"
+            fill="#120902"
+            stroke="#F3D97E"
+            stroke-width="1.8"
+          />
+          <circle cx="97.5" cy="97.5" r="1.5" fill="#F3D97E" />
+        </svg>
+      `;
+    }
+
+    function mountBrandEmblem(slotId, uid) {
+      const slot = document.getElementById(slotId);
+      if (!slot) return;
+
+      const customUrl = (SITE_CONFIG.brand.logoImageUrl || "").trim();
+      if (customUrl !== "") {
+        const img = document.createElement("img");
+        img.src = customUrl;
+        img.alt = `${SITE_CONFIG.brand.name} Emblem`;
+        img.className = "w-full h-full object-contain rounded-xl";
+        img.onerror = () => {
+          slot.innerHTML = createMandalaEyeSVG(uid);
+        };
+        slot.innerHTML = "";
+        slot.appendChild(img);
+      } else {
+        slot.innerHTML = createMandalaEyeSVG(uid);
+      }
+    }
+
+    /**
+     * =========================================================================
+     * DYNAMIC PRODUCT RENDERING (HOMEPAGE STRIP + PRODUCTS LAB)
+     * =========================================================================
+     */
+    function renderProducts() {
+      const productsGrid = document.getElementById("products-grid");
+      const homeStrip = document.getElementById("home-ecosystem-strip");
+      const products = Array.isArray(SITE_CONFIG.products) ? SITE_CONFIG.products : [];
+
+      if (homeStrip) {
+        homeStrip.innerHTML = products
+          .map((item) => {
+            const statusClass = item.isLive
+              ? "bg-[#D4AF37]/15 border-[#D4AF37]/40 text-[#F3D97E]"
+              : "bg-[#38BDF8]/10 border-[#38BDF8]/30 text-[#38BDF8]";
+            const dotClass = item.isLive ? "bg-[#F3D97E]" : "bg-[#38BDF8]";
+            const statusLabel = item.isLive ? "LIVE" : "INCOMING";
+
+            return `
+              <a
+                href="#products"
+                data-nav-target="products"
+                class="rounded-2xl bg-[#06080D] border border-white/[0.08] hover:border-[#D4AF37]/40 p-4 flex flex-col justify-between transition-colors"
+              >
+                <div>
+                  <div class="flex items-center justify-between gap-2 mb-2.5">
+                    <span class="font-display text-base font-bold text-[#F8FAFC]">${item.name}</span>
+                    <span class="inline-flex items-center gap-1.5 rounded-full border ${statusClass} px-2.5 py-0.5 font-mono text-[9px] font-semibold tracking-[0.14em] uppercase">
+                      <span class="h-1.5 w-1.5 rounded-full ${dotClass}"></span>
+                      ${statusLabel}
+                    </span>
+                  </div>
+                  <p class="text-xs text-[#94A3B8] leading-relaxed">${item.tagline}</p>
+                </div>
+                <div class="mt-3 pt-2.5 border-t border-white/[0.06] font-mono text-[10px] text-[#D4AF37] uppercase">
+                  View in Product Lab &#8594;
+                </div>
+              </a>
+            `;
+          })
+          .join("");
+      }
+
+      if (productsGrid) {
+        productsGrid.innerHTML = products
+          .map((item) => {
+            const cardBorder = item.isLive ? "card-surface-gold" : "card-surface";
+            const badgeStyle = item.isLive
+              ? "bg-[#D4AF37]/15 border-[#D4AF37]/45 text-[#F3D97E]"
+              : "bg-[#38BDF8]/10 border-[#38BDF8]/30 text-[#38BDF8]";
+            const dotStyle = item.isLive ? "bg-[#F3D97E]" : "bg-[#38BDF8]";
+            const btnStyle = item.isLive
+              ? "bg-gradient-to-r from-[#D4AF37] to-[#F3D97E] text-[#06080D] hover:brightness-105"
+              : "bg-[#06080D] border border-[#D4AF37]/35 text-[#F8FAFC] hover:border-[#F3D97E]";
+            const isExternal = item.url && (item.url.startsWith("http://") || item.url.startsWith("https://"));
+
+            return `
+              <article class="rounded-3xl ${cardBorder} p-6 sm:p-7 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between gap-2 mb-5">
+                    <span class="inline-flex items-center gap-2 rounded-full border ${badgeStyle} px-3 py-1 font-mono text-[10px] font-semibold tracking-[0.16em] uppercase">
+                      <span class="h-1.5 w-1.5 rounded-full ${dotStyle} animate-dot-pulse"></span>
+                      ${item.badge}
+                    </span>
+                    <span class="font-mono text-[10px] tracking-[0.16em] text-[#94A3B8] uppercase">
+                      FREE TOOL
+                    </span>
+                  </div>
+
+                  <h2 class="font-display text-xl sm:text-2xl font-bold text-[#F8FAFC] mb-1.5">
+                    ${item.name}
+                  </h2>
+                  <div class="font-mono text-xs font-medium text-[#D4AF37] mb-4">
+                    ${item.tagline}
+                  </div>
+                  <p class="text-sm leading-relaxed text-[#94A3B8] mb-7">
+                    ${item.description}
+                  </p>
+                </div>
+
+                <div class="pt-4 border-t border-white/[0.08]">
+                  <a
+                    href="${item.url || "#"}"
+                    data-product-id="${item.id}"
+                    data-product-name="${item.name}"
+                    ${isExternal ? 'target="_blank" rel="noopener noreferrer"' : ""}
+                    class="product-cta-btn w-full inline-flex items-center justify-center gap-2 rounded-2xl ${btnStyle} active:scale-[0.985] px-5 py-3.5 font-display text-sm font-bold transition-transform duration-150"
+                  >
+                    <span>${item.ctaLabel}</span>
+                    <span aria-hidden="true">${isExternal ? "&#8599;" : "&#8594;"}</span>
+                  </a>
+                </div>
+              </article>
+            `;
+          })
+          .join("");
+      }
+    }
+
+    /**
+     * =========================================================================
+     * HYDRATE BRAND COPY & SOCIAL URLS FROM SITE_CONFIG
+     * =========================================================================
+     */
+    function hydrateBrandAndLinks() {
+      mountBrandEmblem("preloader-logo-slot", "pre");
+      mountBrandEmblem("desktop-sidebar-logo", "desk");
+      mountBrandEmblem("mobile-header-logo", "mhead");
+      mountBrandEmblem("mobile-drawer-logo", "mdraw");
+      mountBrandEmblem("hero-logo-slot", "hero");
+
+      const setText = (id, text) => {
+        const el = document.getElementById(id);
+        if (el && typeof text === "string") el.textContent = text;
+      };
+
+      setText("hero-badge", SITE_CONFIG.brand.badge);
+      setText("hero-brand-title", SITE_CONFIG.brand.name);
+      setText("hero-headline", SITE_CONFIG.brand.headline);
+      setText("hero-bio", SITE_CONFIG.brand.bio);
+
+      const igLink = document.getElementById("socials-ig-link");
+      const tgLink = document.getElementById("socials-tg-link");
+      const prodTg = document.getElementById("products-telegram-cta");
+
+      if (igLink) igLink.href = SITE_CONFIG.socials.instagram.url;
+      if (tgLink) tgLink.href = SITE_CONFIG.socials.telegram.url;
+      if (prodTg) prodTg.href = SITE_CONFIG.socials.telegram.url;
+    }
+
+    /**
+     * =========================================================================
+     * EXACT 3.5-SECOND (3500MS) 60FPS BOOT PRELOADER CONTROLLER
+     * =========================================================================
+     */
+    let preloaderRafId = null;
+
+    function startPreloaderSequence() {
+      const preloader = document.getElementById("preloader");
+      const appShell = document.getElementById("app-shell");
+      const bar = document.getElementById("preloader-bar");
+      const percentEl = document.getElementById("preloader-percent");
+      const statusEl = document.getElementById("preloader-status");
+
+      if (!preloader || !appShell || !bar || !percentEl || !statusEl) return;
+
+      if (preloaderRafId !== null) {
+        cancelAnimationFrame(preloaderRafId);
+        preloaderRafId = null;
+      }
+
+      preloader.style.display = "flex";
+      void preloader.offsetWidth;
+      preloader.classList.remove("is-exiting");
+      appShell.classList.add("is-hidden");
+
+      bar.style.transform = "scaleX(0)";
+      percentEl.textContent = "0%";
+      statusEl.textContent = "INITIALIZING DIGIHUSTLECO...";
+
+      const totalDuration = SITE_CONFIG.preloaderDurationMs || 3500;
+      const startTime = performance.now();
+
+      function tick(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / totalDuration, 1);
+        const pct = Math.min(100, Math.round(progress * 100));
+
+        bar.style.transform = `scaleX(${progress.toFixed(4)})`;
+        percentEl.textContent = `${pct}%`;
+
+        if (progress < 0.36) {
+          statusEl.textContent = "INITIALIZING DIGIHUSTLECO...";
+        } else if (progress < 0.74) {
+          statusEl.textContent = "LOADING CREATOR ECOSYSTEM...";
+        } else {
+          statusEl.textContent = "BUILT FOR THE LOVE OF THE GAME";
+        }
+
+        if (progress < 1) {
+          preloaderRafId = requestAnimationFrame(tick);
+        } else {
+          preloaderRafId = null;
+          preloader.classList.add("is-exiting");
+          appShell.classList.remove("is-hidden");
+
+          setTimeout(() => {
+            preloader.style.display = "none";
+          }, 480);
+        }
+      }
+
+      preloaderRafId = requestAnimationFrame(tick);
+    }
+
+    /**
+     * =========================================================================
+     * HASH ROUTER & ACTIVE SIDETAB SYNCHRONIZATION (#home, #products, #socials, #contact)
+     * =========================================================================
+     */
+    const VALID_VIEWS = ["home", "products", "socials", "contact"];
+
+    function navigateToView(rawViewName, updateHash = true) {
+      const viewName = VALID_VIEWS.includes(rawViewName) ? rawViewName : "home";
+
+      if (updateHash && window.location.hash !== `#${viewName}`) {
+        window.location.hash = viewName;
+      }
+
+      // Toggle visible view panel with smooth 60fps fade/slide entrance
+      document.querySelectorAll(".view-panel").forEach((panel) => {
+        if (panel.dataset.view === viewName) {
+          panel.classList.remove("hidden");
+          panel.classList.add("is-entering");
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              panel.classList.remove("is-entering");
+            });
+          });
+        } else {
+          panel.classList.add("hidden");
+        }
+      });
+
+      // Update Desktop Sidebar & Mobile Drawer active states (Gold left-border + subtle gold tint)
+      document.querySelectorAll(".nav-tab-desktop, .nav-tab-drawer").forEach((tab) => {
+        const isActive = tab.dataset.navTarget === viewName;
+        if (isActive) {
+          tab.classList.add("border-[#D4AF37]", "bg-[#D4AF37]/12", "text-[#F3D97E]", "font-semibold");
+          tab.classList.remove("border-transparent", "text-[#94A3B8]");
+        } else {
+          tab.classList.remove("border-[#D4AF37]", "bg-[#D4AF37]/12", "text-[#F3D97E]", "font-semibold");
+          tab.classList.add("border-transparent", "text-[#94A3B8]");
+        }
+      });
+
+      // Update Mobile Bottom 4-Tab Bar active states
+      document.querySelectorAll(".nav-tab-bottom").forEach((tab) => {
+        const isActive = tab.dataset.navTarget === viewName;
+        if (isActive) {
+          tab.classList.add("bg-[#D4AF37]/15", "text-[#F3D97E]");
+          tab.classList.remove("text-[#94A3B8]");
+        } else {
+          tab.classList.remove("bg-[#D4AF37]/15", "text-[#F3D97E]");
+          tab.classList.add("text-[#94A3B8]");
+        }
+      });
+
+      window.scrollTo({ top: 0, behavior: "instant" });
+      closeMobileDrawer();
+    }
+
+    /**
+     * =========================================================================
+     * MOBILE SLIDE-OUT SIDETAB DRAWER CONTROLLER (GPU TRANSLATEX)
+     * =========================================================================
+     */
+    function openMobileDrawer() {
+      const drawer = document.getElementById("mobile-drawer");
+      const backdrop = document.getElementById("mobile-drawer-backdrop");
+      const panel = document.getElementById("mobile-drawer-panel");
+      const openBtn = document.getElementById("mobile-menu-open-btn");
+
+      if (!drawer || !backdrop || !panel) return;
+      drawer.classList.remove("hidden");
+      if (openBtn) openBtn.setAttribute("aria-expanded", "true");
+
+      requestAnimationFrame(() => {
+        backdrop.classList.remove("opacity-0");
+        backdrop.classList.add("opacity-100");
+        panel.style.transform = "translateX(0)";
+      });
+    }
+
+    function closeMobileDrawer() {
+      const drawer = document.getElementById("mobile-drawer");
+      const backdrop = document.getElementById("mobile-drawer-backdrop");
+      const panel = document.getElementById("mobile-drawer-panel");
+      const openBtn = document.getElementById("mobile-menu-open-btn");
+
+      if (!drawer || drawer.classList.contains("hidden")) return;
+      if (openBtn) openBtn.setAttribute("aria-expanded", "false");
+
+      if (backdrop) {
+        backdrop.classList.remove("opacity-100");
+        backdrop.classList.add("opacity-0");
+      }
+      if (panel) {
+        panel.style.transform = "translateX(-100%)";
+      }
+
+      setTimeout(() => {
+        drawer.classList.add("hidden");
+      }, 280);
+    }
+
+    /**
+     * =========================================================================
+     * CLIPBOARD & TOAST NOTIFICATION UTILITIES (ZERO ALERT())
+     * =========================================================================
+     */
+    let toastTimer = null;
+
+    function showToast(message) {
+      const banner = document.getElementById("toast-banner");
+      const label = document.getElementById("toast-message");
+      if (!banner || !label) return;
+
+      label.textContent = message;
+      banner.classList.remove("opacity-0", "translate-y-4");
+      banner.classList.add("opacity-100", "translate-y-0");
+
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        banner.classList.remove("opacity-100", "translate-y-0");
+        banner.classList.add("opacity-0", "translate-y-4");
+      }, 2600);
+    }
+
+    function copyTextToClipboard(text, toastMessage) {
+      const helper = document.createElement("textarea");
+      helper.value = text;
+      helper.setAttribute("readonly", "");
+      helper.style.position = "fixed";
+      helper.style.opacity = "0";
+      document.body.appendChild(helper);
+      helper.select();
+
+      try {
+        document.execCommand("copy");
+        showToast(toastMessage);
+      } catch (err) {
+        showToast("READY TO PASTE");
+      } finally {
+        document.body.removeChild(helper);
+      }
+    }
+
+    /**
+     * =========================================================================
+     * INTERACTIVE INQUIRY BRIEF BUILDER (#contact)
+     * =========================================================================
+     */
+    let selectedServiceCategory = "Custom App / Web Development";
+
+    function initInquiryBuilder() {
+      const pills = document.querySelectorAll(".category-pill");
+      pills.forEach((pill) => {
+        pill.addEventListener("click", () => {
+          selectedServiceCategory = pill.dataset.category || "Custom App / Web Development";
+
+          pills.forEach((p) => {
+            const isSelected = p === pill;
+            if (isSelected) {
+              p.classList.add("border-[#D4AF37]", "bg-[#D4AF37]/15", "text-[#F3D97E]", "font-semibold");
+              p.classList.remove("border-white/[0.08]", "bg-[#06080D]", "text-[#94A3B8]", "font-medium");
+            } else {
+              p.classList.remove("border-[#D4AF37]", "bg-[#D4AF37]/15", "text-[#F3D97E]", "font-semibold");
+              p.classList.add("border-white/[0.08]", "bg-[#06080D]", "text-[#94A3B8]", "font-medium");
+            }
+          });
+        });
+      });
+
+      const buildFormattedBrief = () => {
+        const nameVal = (document.getElementById("inquiry-name")?.value || "").trim() || "Not specified";
+        const contactVal = (document.getElementById("inquiry-contact")?.value || "").trim() || "Not specified";
+        const briefVal = (document.getElementById("inquiry-brief")?.value || "").trim() || "Interested in collaborating with DIGIHUSTLECO.";
+
+        return [
+          `To: ${SITE_CONFIG.brand.email}`,
+          `Subject: [${selectedServiceCategory}] Inquiry — ${nameVal}`,
+          `----------------------------------------`,
+          `Service Category: ${selectedServiceCategory}`,
+          `Name / Brand: ${nameVal}`,
+          `Contact Handle / Email: ${contactVal}`,
+          ``,
+          `Project Brief:`,
+          briefVal
+        ].join("\n");
+      };
+
+      const sendEmailBtn = document.getElementById("send-via-email-btn");
+      if (sendEmailBtn) {
+        sendEmailBtn.addEventListener("click", () => {
+          const nameVal = (document.getElementById("inquiry-name")?.value || "").trim() || "New Client";
+          const contactVal = (document.getElementById("inquiry-contact")?.value || "").trim() || "Not specified";
+          const briefVal = (document.getElementById("inquiry-brief")?.value || "").trim() || "Hi DIGIHUSTLECO team, I would like to discuss a project.";
+
+          const subject = encodeURIComponent(`[${selectedServiceCategory}] Inquiry — ${nameVal}`);
+          const body = encodeURIComponent(
+            `Service Category: ${selectedServiceCategory}\nName / Brand: ${nameVal}\nContact Handle / Email: ${contactVal}\n\nProject Brief:\n${briefVal}`
+          );
+
+          window.location.href = `mailto:${SITE_CONFIG.brand.email}?subject=${subject}&body=${body}`;
+        });
+      }
+
+      const copyBriefBtn = document.getElementById("copy-brief-btn");
+      const copyBriefLabel = document.getElementById("copy-brief-label");
+      if (copyBriefBtn) {
+        copyBriefBtn.addEventListener("click", () => {
+          const formatted = buildFormattedBrief();
+          copyTextToClipboard(formatted, "INQUIRY BRIEF & EMAIL COPIED");
+
+          if (copyBriefLabel) {
+            copyBriefLabel.textContent = "Copied Brief!";
+            setTimeout(() => {
+              copyBriefLabel.textContent = "Copy Brief to Clipboard";
+            }, 2200);
+          }
+        });
+      }
+    }
+
+    /**
+     * =========================================================================
+     * BOOTSTRAP APPLICATION ON DOMCONTENTLOADED
+     * =========================================================================
+     */
+    window.addEventListener("DOMContentLoaded", () => {
+      hydrateBrandAndLinks();
+      renderProducts();
+      initInquiryBuilder();
+
+      // Determine initial view from URL hash (defaults to #home)
+      const initialHash = window.location.hash.replace("#", "").toLowerCase();
+      navigateToView(VALID_VIEWS.includes(initialHash) ? initialHash : "home", false);
+
+      // Start exact 3.5s boot preloader
+      startPreloaderSequence();
+
+      // Hash change listener (supports browser back/forward buttons)
+      window.addEventListener("hashchange", () => {
+        const target = window.location.hash.replace("#", "").toLowerCase();
+        if (VALID_VIEWS.includes(target)) {
+          navigateToView(target, false);
+        }
+      });
+
+      // Delegate navigation clicks across sidebar, mobile drawer, bottom bar, and inline CTAs
+      document.addEventListener("click", (e) => {
+        const navTrigger = e.target.closest("[data-nav-target]");
+        if (navTrigger) {
+          e.preventDefault();
+          navigateToView(navTrigger.dataset.navTarget, true);
+          return;
+        }
+
+        // Handle placeholder "#" product links cleanly with zero 404 errors
+        const productBtn = e.target.closest(".product-cta-btn");
+        if (productBtn) {
+          const href = productBtn.getAttribute("href");
+          if (!href || href === "#") {
+            e.preventDefault();
+            const prodName = productBtn.dataset.productName || "This tool";
+            showToast(`${prodName.toUpperCase()} — LINK COMING SOON`);
+          }
+          return;
+        }
+
+        // Quick-copy email buttons (sidebar, drawer, and contact card)
+        const copyEmailTrigger = e.target.closest("[data-copy-email]");
+        if (copyEmailTrigger) {
+          copyTextToClipboard(SITE_CONFIG.brand.email, "COPIED DIGIHUSTLEOFFICIAL@GMAIL.COM");
+          const cardBtnLabel = document.getElementById("contact-copy-email-label");
+          if (copyEmailTrigger.id === "contact-copy-email-btn" && cardBtnLabel) {
+            cardBtnLabel.textContent = "Copied!";
+            setTimeout(() => {
+              cardBtnLabel.textContent = "Copy Email";
+            }, 2200);
+          }
+          return;
+        }
+
+        // Replay 3.5s intro buttons (sidebar & mobile drawer)
+        const replayTrigger = e.target.closest("[data-replay-intro]");
+        if (replayTrigger) {
+          closeMobileDrawer();
+          startPreloaderSequence();
+        }
+      });
+
+      // Mobile drawer open/close listeners
+      const openDrawerBtn = document.getElementById("mobile-menu-open-btn");
+      const closeDrawerBtn = document.getElementById("mobile-menu-close-btn");
+      const drawerBackdrop = document.getElementById("mobile-drawer-backdrop");
+
+      if (openDrawerBtn) openDrawerBtn.addEventListener("click", openMobileDrawer);
+      if (closeDrawerBtn) closeDrawerBtn.addEventListener("click", closeMobileDrawer);
+      if (drawerBackdrop) drawerBackdrop.addEventListener("click", closeMobileDrawer);
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeMobileDrawer();
+      });
+    });
+  </script>
+</body>
+</html>
